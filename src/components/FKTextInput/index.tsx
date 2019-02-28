@@ -8,9 +8,9 @@ const FKTextInput = ({
   field: { name, onBlur, onChange, value },
   form: { errors, touched },
   label,
-}: FieldProps & { disabled?: boolean, label?: string }) => (
+}: FieldProps & { disabled?: boolean; label?: string }) => (
   <View>
-    {label !== undefined &&<Text>{label}</Text>}
+    {label !== undefined && <Text>{label}</Text>}
     <TextInput
       editable={!disabled}
       onChangeText={onChange(name)}
