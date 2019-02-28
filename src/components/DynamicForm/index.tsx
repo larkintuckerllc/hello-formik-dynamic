@@ -32,7 +32,6 @@ export default class DynamicForm extends Component<Props> {
       },
       {}
     );
-    console.log(initialValues);
     return (
       <Formik
         initialValues={initialValues}
