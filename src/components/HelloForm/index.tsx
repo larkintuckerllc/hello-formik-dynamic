@@ -57,7 +57,7 @@ const render = (props: FormikProps<FormValues>) => <HelloFormView {...props} />;
 
 const HelloForm = () => (
   <Formik
-    initialValues={{ firstName: '', lastName: '' }}
+    initialValues={{ firstName: 'first', lastName: 'last' }}
     onSubmit={handleSubmitImpl}
     render={render}
     validate={validate}

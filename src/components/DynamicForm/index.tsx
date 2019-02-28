@@ -6,7 +6,6 @@ export interface DynamicFormField {
   name: string;
   initialValue?: string;
   label?: string;
-  required?: boolean;
 }
 
 export interface Props {
@@ -28,10 +27,12 @@ export default class DynamicForm extends Component<Props> {
     const { schema } = this.props;
     const initialValues = schema.reduce(
       (accumulator: FormValues = {}, currentValue: DynamicFormField) => {
-        return { ...accumulator, [currentValue.name]: currentValue.initialValue = '' };
+        const initialValue = currentValue.initialValue !== undefined ? currentValue.initialValue : '';
+        return { ...accumulator, [currentValue.name]: initialValue };
       },
       {}
     );
+    console.log(initialValues);
     return (
       <Formik
         initialValues={initialValues}

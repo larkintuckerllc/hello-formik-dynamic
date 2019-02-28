@@ -12,14 +12,17 @@ const wait = () =>
 
 const SCHEMA = [
   {
+    initialValue: 'first',
     label: 'First Name',
     name: 'firstName',
   },
   {
+    initialValue: 'last',
     label: 'Last Name',
     name: 'lastName',
   },
   {
+    initialValue: 'another',
     label: 'Another',
     name: 'another',
   },
