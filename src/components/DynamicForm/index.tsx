@@ -2,13 +2,6 @@ import { Formik, FormikActions, FormikProps } from 'formik';
 import React, { Component } from 'react';
 import DynamicFormView from './DynamicFormView';
 
-const wait = () =>
-  new Promise(resolve => {
-    setTimeout(() => {
-      resolve();
-    }, 3000);
-  });
-
 export interface DynamicFormField {
   name: string;
   initialValue?: string;
@@ -16,6 +9,7 @@ export interface DynamicFormField {
 }
 
 export interface Props {
+  onSubmit: (formValues: FormValues) => Promise<void>;
   schema: DynamicFormField[];
 }
 
@@ -50,15 +44,13 @@ export default class DynamicForm extends Component<Props> {
     formValues: FormValues,
     { resetForm, setStatus, setSubmitting }: FormikActions<FormValues>
   ) => {
+    const { onSubmit } = this.props;
     setStatus({});
     try {
-      await wait();
-      // throw new Error(); // TESTING ERROR CASE
+      await onSubmit(formValues);
       resetForm();
       setStatus({ succeeded: true });
       setSubmitting(false);
-      // tslint:disable-next-line
-      console.log(formValues);
     } catch (err) {
       setStatus({ failed: true });
       setSubmitting(false);
