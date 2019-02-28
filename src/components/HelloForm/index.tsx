@@ -1,4 +1,4 @@
-import { Formik, FormikProps } from 'formik';
+import { Formik, FormikActions, FormikProps } from 'formik';
 import React from 'react';
 import HelloFormView from './HelloFormView';
 
@@ -33,8 +33,8 @@ const validate = ({ firstName, lastName }: FormValues) => {
 };
 
 const handleSubmitImpl = async (
-  { firstName, lastName }: any,
-  { resetForm, setStatus, setSubmitting }: any
+  { firstName, lastName }: FormValues,
+  { resetForm, setStatus, setSubmitting }: FormikActions<FormValues>
 ) => {
   setStatus({});
   try {
