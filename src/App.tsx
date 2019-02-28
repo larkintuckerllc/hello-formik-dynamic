@@ -22,6 +22,7 @@ const SCHEMA = [
 const handleSubmit = async (formValues: FormValues) => {
   await wait();
   // throw new Error(); // TESTING ERROR CASE
+  // tslint:disable-next-line
   console.log(formValues);
 };
 
