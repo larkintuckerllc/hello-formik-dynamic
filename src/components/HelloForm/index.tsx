@@ -7,6 +7,25 @@ interface FormValues {
   firstName: string;
   lastName: string;
 }
+interface FormErrors {
+  firstName?: string;
+  lastName?: string;
+}
+
+const validate = ({ firstName, lastName }: FormValues) => {
+  const errors: FormErrors = {};
+  if (firstName === undefined) {
+    errors.firstName = 'Required';
+  } else if (firstName.trim() === '') {
+    errors.firstName = 'Must not be blank';
+  }
+  if (lastName === undefined) {
+    errors.lastName = 'Required';
+  } else if (lastName.trim() === '') {
+    errors.lastName = 'Must not be blank';
+  }
+  return errors;
+};
 
 const handleSubmitImpl = ({ firstName, lastName }: FormValues) => {
   // tslint:disable-next-line
@@ -15,11 +34,11 @@ const handleSubmitImpl = ({ firstName, lastName }: FormValues) => {
   console.log(`lastName: ${lastName}`);
 };
 
-const render = ({ handleSubmit }: FormikProps<FormValues>) => (
+const render = ({ handleSubmit, isValid }: FormikProps<FormValues>) => (
   <View>
     <Field component={FKTextInput} name="firstName" />
     <Field component={FKTextInput} name="lastName" />
-    <Button title="Submit Hello" onPress={handleSubmit} />
+    <Button disabled={!isValid} title="Submit Hello" onPress={handleSubmit} />
   </View>
 );
 
@@ -28,6 +47,7 @@ const HelloForm = () => (
     initialValues={{ firstName: '', lastName: '' }}
     onSubmit={handleSubmitImpl}
     render={render}
+    validate={validate}
   />
 );
 
