@@ -12,10 +12,16 @@ const wait = () =>
 
 const SCHEMA = [
   {
+    label: 'First Name',
     name: 'firstName',
   },
   {
+    label: 'Last Name',
     name: 'lastName',
+  },
+  {
+    label: 'Another',
+    name: 'another',
   },
 ];
 

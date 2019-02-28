@@ -12,8 +12,8 @@ const HelloFormView = ({
   status = {},
 }: FormikProps<FormValues>) => (
   <View>
-    <Field disabled={isSubmitting} component={FKTextInput} name="firstName" />
-    <Field disabled={isSubmitting} component={FKTextInput} name="lastName" />
+    <Field disabled={isSubmitting} component={FKTextInput} label="First Name" name="firstName" />
+    <Field disabled={isSubmitting} component={FKTextInput} label="Last Name" name="lastName" />
     {status.succeeded && <Text style={styles.rootSucceeded}>SUCCEEDED</Text>}
     {status.failed && <Text style={styles.rootFailed}>FAILED</Text>}
     <Button disabled={!isValid || isSubmitting} title="Submit" onPress={handleSubmit} />

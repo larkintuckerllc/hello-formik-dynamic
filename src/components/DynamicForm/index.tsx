@@ -5,6 +5,7 @@ import DynamicFormView from './DynamicFormView';
 export interface DynamicFormField {
   name: string;
   initialValue?: string;
+  label?: string;
   required?: boolean;
 }
 

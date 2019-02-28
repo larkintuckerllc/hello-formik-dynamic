@@ -24,6 +24,7 @@ const HelloFormView = ({
             component={FKTextInput}
             disabled={isSubmitting}
             key={field.name}
+            label={field.label}
             name={field.name}
           />
         );
