@@ -27,7 +27,8 @@ export default class DynamicForm extends Component<Props> {
     const { schema } = this.props;
     const initialValues = schema.reduce(
       (accumulator: FormValues = {}, currentValue: DynamicFormField) => {
-        const initialValue = currentValue.initialValue !== undefined ? currentValue.initialValue : '';
+        const initialValue =
+          currentValue.initialValue !== undefined ? currentValue.initialValue : '';
         return { ...accumulator, [currentValue.name]: initialValue };
       },
       {}
