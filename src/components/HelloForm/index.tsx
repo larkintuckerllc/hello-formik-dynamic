@@ -1,9 +1,14 @@
-import { Field, Formik, FormikProps } from 'formik';
+import { Formik, FormikProps } from 'formik';
 import React from 'react';
-import { Button, View } from 'react-native';
-import FKTextInput from '../FKTextInput';
+import HelloFormView from './HelloFormView';
 
-interface FormValues {
+const wait = () =>
+  new Promise(resolve => {
+    setTimeout(() => {
+      resolve();
+    }, 3000);
+  });
+export interface FormValues {
   firstName: string;
   lastName: string;
 }
@@ -27,20 +32,28 @@ const validate = ({ firstName, lastName }: FormValues) => {
   return errors;
 };
 
-const handleSubmitImpl = ({ firstName, lastName }: FormValues) => {
-  // tslint:disable-next-line
-  console.log(`firstName: ${firstName}`);
-  // tslint:disable-next-line
-  console.log(`lastName: ${lastName}`);
+const handleSubmitImpl = async (
+  { firstName, lastName }: any,
+  { resetForm, setStatus, setSubmitting }: any
+) => {
+  setStatus({});
+  try {
+    await wait();
+    // throw new Error(); // TESTING ERROR CASE
+    resetForm();
+    setStatus({ succeeded: true });
+    setSubmitting(false);
+    // tslint:disable-next-line
+    console.log(`firstName: ${firstName}`);
+    // tslint:disable-next-line
+    console.log(`lastName: ${lastName}`);
+  } catch (err) {
+    setStatus({ failed: true });
+    setSubmitting(false);
+  }
 };
 
-const render = ({ handleSubmit, isValid }: FormikProps<FormValues>) => (
-  <View>
-    <Field component={FKTextInput} name="firstName" />
-    <Field component={FKTextInput} name="lastName" />
-    <Button disabled={!isValid} title="Submit Hello" onPress={handleSubmit} />
-  </View>
-);
+const render = (props: FormikProps<FormValues>) => <HelloFormView {...props} />;
 
 const HelloForm = () => (
   <Formik

@@ -4,11 +4,13 @@ import { Text, TextInput, View } from 'react-native';
 import styles from './styles';
 
 const FKTextInput = ({
+  disabled = false,
   field: { name, onBlur, onChange, value },
   form: { errors, touched },
-}: FieldProps) => (
+}: FieldProps & { disabled?: boolean }) => (
   <View>
     <TextInput
+      editable={!disabled}
       onChangeText={onChange(name)}
       onBlur={onBlur(name)}
       style={[
