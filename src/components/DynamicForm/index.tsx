@@ -18,7 +18,7 @@ export interface FormValues {
 }
 
 export default class DynamicForm extends Component<Props> {
-  // SCHEMA IS FORCED TO BE IMMUTABLE
+  // NO CHANGING SCHEMA, ETC.
   public shouldComponentUpdate() {
     return false;
   }
