@@ -36,17 +36,10 @@ const handleSubmit = async (formValues: FormValues) => {
   console.log(formValues);
 };
 
-const handleValidate = ({ firstName, lastName }: FormValues) => {
+const handleValidate = ({ firstName }: FormValues) => {
   const errors: FormErrors = {};
-  if (firstName === undefined) {
-    errors.firstName = 'Required';
-  } else if (firstName.trim() === '') {
-    errors.firstName = 'Must not be blank';
-  }
-  if (lastName === undefined) {
-    errors.lastName = 'Required';
-  } else if (lastName.trim() === '') {
-    errors.lastName = 'Must not be blank';
+  if (firstName !== 'John') {
+    errors.firstName = 'Must be John';
   }
   return errors;
 };

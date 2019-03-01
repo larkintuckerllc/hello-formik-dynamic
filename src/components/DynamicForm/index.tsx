@@ -11,7 +11,7 @@ export interface DynamicFormField {
 
 export interface Props {
   onSubmit: (formValues: FormValues) => Promise<void>;
-  onValidate: (formValies: FormValues) => FormErrors;
+  onValidate?: (formValies: FormValues) => FormErrors;
   schema: DynamicFormField[];
 }
 
@@ -29,7 +29,7 @@ export default class DynamicForm extends Component<Props> {
   }
 
   public render() {
-    const { onValidate, schema } = this.props;
+    const { schema } = this.props;
     const initialValues = schema.reduce(
       (accumulator: FormValues = {}, currentValue: DynamicFormField) => {
         const initialValue =
@@ -41,14 +41,14 @@ export default class DynamicForm extends Component<Props> {
     return (
       <Formik
         initialValues={initialValues}
-        onSubmit={this.handleSubmitImpl}
+        onSubmit={this.handleSubmit}
         render={this.renderForm}
-        validate={onValidate}
+        validate={this.handleValidate}
       />
     );
   }
 
-  private handleSubmitImpl = async (
+  private handleSubmit = async (
     formValues: FormValues,
     { resetForm, setStatus, setSubmitting }: FormikActions<FormValues>
   ) => {
@@ -63,6 +63,27 @@ export default class DynamicForm extends Component<Props> {
       setStatus({ failed: true });
       setSubmitting(false);
     }
+  };
+
+  private handleValidate = (formValues: FormValues) => {
+    const { onValidate, schema } = this.props;
+    let errors: FormErrors = {};
+    schema.forEach(field => {
+      if (field.required !== true) {
+        return;
+      }
+      const { name } = field;
+      if (formValues[name] === undefined) {
+        errors[name] = 'Required';
+      } else if (formValues[name].trim() === '') {
+        errors[name] = 'Must not be blank';
+      }
+    });
+    if (onValidate !== undefined) {
+      const additionalErrors = onValidate(formValues);
+      errors = { ...errors, ...additionalErrors };
+    }
+    return errors;
   };
 
   private renderForm = (props: FormikProps<FormValues>) => {
