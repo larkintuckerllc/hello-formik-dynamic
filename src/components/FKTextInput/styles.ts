@@ -9,6 +9,9 @@ const styles = StyleSheet.create({
     height: 40,
     padding: 10,
   },
+  rootLabel: {
+    flexDirection: 'row',
+  },
 });
 
 export default styles;

@@ -6,6 +6,7 @@ export interface DynamicFormField {
   name: string;
   initialValue?: string;
   label?: string;
+  required?: boolean;
 }
 
 export interface Props {
