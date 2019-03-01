@@ -10,10 +10,14 @@ export interface DynamicFormField {
 
 export interface Props {
   onSubmit: (formValues: FormValues) => Promise<void>;
+  onValidate: (formValies: FormValues) => FormErrors;
   schema: DynamicFormField[];
 }
 
 export interface FormValues {
+  [key: string]: string;
+}
+export interface FormErrors {
   [key: string]: string;
 }
 
@@ -24,7 +28,7 @@ export default class DynamicForm extends Component<Props> {
   }
 
   public render() {
-    const { schema } = this.props;
+    const { onValidate, schema } = this.props;
     const initialValues = schema.reduce(
       (accumulator: FormValues = {}, currentValue: DynamicFormField) => {
         const initialValue =
@@ -38,6 +42,7 @@ export default class DynamicForm extends Component<Props> {
         initialValues={initialValues}
         onSubmit={this.handleSubmitImpl}
         render={this.renderForm}
+        validate={onValidate}
       />
     );
   }

@@ -1,6 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import DynamicForm, { FormValues } from './components/DynamicForm';
+import DynamicForm, { FormErrors, FormValues } from './components/DynamicForm';
 import HelloForm from './components/HelloForm';
 
 const wait = () =>
@@ -22,7 +22,6 @@ const SCHEMA = [
     name: 'lastName',
   },
   {
-    initialValue: 'another',
     label: 'Another',
     name: 'another',
   },
@@ -35,13 +34,28 @@ const handleSubmit = async (formValues: FormValues) => {
   console.log(formValues);
 };
 
+const handleValidate = ({ firstName, lastName }: FormValues) => {
+  const errors: FormErrors = {};
+  if (firstName === undefined) {
+    errors.firstName = 'Required';
+  } else if (firstName.trim() === '') {
+    errors.firstName = 'Must not be blank';
+  }
+  if (lastName === undefined) {
+    errors.lastName = 'Required';
+  } else if (lastName.trim() === '') {
+    errors.lastName = 'Must not be blank';
+  }
+  return errors;
+};
+
 export default class App extends React.Component {
   public render() {
     return (
       <View style={styles.container}>
         <Text>Open up App.js to start working on your app!</Text>
         <HelloForm />
-        <DynamicForm onSubmit={handleSubmit} schema={SCHEMA} />
+        <DynamicForm onSubmit={handleSubmit} onValidate={handleValidate} schema={SCHEMA} />
       </View>
     );
   }
