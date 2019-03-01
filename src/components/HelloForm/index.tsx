@@ -32,7 +32,7 @@ const validate = ({ firstName, lastName }: FormValues) => {
   return errors;
 };
 
-const handleSubmitImpl = async (
+const handleSubmit = async (
   { firstName, lastName }: FormValues,
   { resetForm, setStatus, setSubmitting }: FormikActions<FormValues>
 ) => {
@@ -58,7 +58,7 @@ const render = (props: FormikProps<FormValues>) => <HelloFormView {...props} />;
 const HelloForm = () => (
   <Formik
     initialValues={{ firstName: 'first', lastName: 'last' }}
-    onSubmit={handleSubmitImpl}
+    onSubmit={handleSubmit}
     render={render}
     validate={validate}
   />
